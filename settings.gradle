@@ -1,0 +1,6 @@
+rootProject.name = 'jpa-analyze'
+include 'jpa-basic'
+include 'jpa-streamer'
+include 'jpa-querydsl'
+include 'jpa-mapping'
+
