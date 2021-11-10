@@ -1,4 +1,4 @@
-package com.rebwon.streamer;
+package com.rebwon.basic.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

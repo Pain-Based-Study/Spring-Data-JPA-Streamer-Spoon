@@ -17,6 +17,7 @@ sourceSets {
     main.java.srcDir querydslDir
 
 }
+
 configurations {
     querydsl.extendsFrom compileClasspath
 }

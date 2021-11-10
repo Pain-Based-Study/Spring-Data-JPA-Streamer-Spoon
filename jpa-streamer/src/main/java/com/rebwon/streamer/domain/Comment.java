@@ -1,71 +1,68 @@
-package com.rebwon.streamer;
+package com.rebwon.streamer.domain;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "article",
+@Table(name = "comment",
     indexes = {
-        @Index(name = "idx_title_article", columnList = "title")
-        //@Index(name = "idx_author_article", columnList = "memberId")
+        @Index(name = "idx_author_comment", columnList = "account_id"),
+        @Index(name = "idx_article_comment", columnList = "article_id")
     })
-public class Article {
+public class Comment {
 
-    protected Article() {}
+    protected Comment() {}
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String title;
-    @Column(nullable = false)
     private String content;
-    /*@Column(nullable = false)
-    private Long memberId;*/
-    @ManyToOne
-    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id",
+        foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Account account;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_id",
+        foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Article article;
     @Column(nullable = false)
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private boolean deleted = false;
-    @OneToMany
-    private Set<Tag> tags = new HashSet<>();
 
-    /*public Article(String title, String content, Long memberId) {
-        this.title = title;
+    public Comment(String content, Account account, Article article) {
         this.content = content;
-        this.memberId = memberId;
+        this.account = account;
+        this.article = article;
         this.createdAt = LocalDateTime.now();
-    }*/
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getContent() {
         return content;
     }
 
-    /*public Long getMemberId() {
-        return memberId;
-    }*/
+    public Account getAccount() {
+        return account;
+    }
 
-    public Member getMember() {
-        return member;
+    public Article getArticle() {
+        return article;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -78,9 +75,5 @@ public class Article {
 
     public boolean isDeleted() {
         return deleted;
-    }
-
-    public Set<Tag> getTags() {
-        return tags;
     }
 }
