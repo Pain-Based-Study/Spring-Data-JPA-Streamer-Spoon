@@ -3,4 +3,5 @@ include 'jpa-basic'
 include 'jpa-streamer'
 include 'jpa-querydsl'
 include 'jpa-mapping'
+include 'jpa-case'
 
