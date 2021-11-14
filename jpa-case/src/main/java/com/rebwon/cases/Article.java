@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class Article {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     private String title;
